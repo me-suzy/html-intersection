@@ -1,0 +1,8 @@
+Avantajele codului GROK:
+
+Regex mai precis: Folosește pattern-uri specifice pentru extracting canonical și flags, nu căutări generale care pot missa edge cases
+Logică bidirectională curată: Construiește ro_to_en_map și en_to_ro_map independent, apoi le folosește consistent fără suprascrieri
+Fallback inteligent: Are logică de rezervă pentru matching prin similaritatea numelor de fișiere (case-insensitive) când flags-urile sunt greșite
+Evită conflictele: Verifică filename not in ro_to_en_map înainte de a adăuga mapping-uri noi, prevenind suprascrierile
+Procesare sistematică: Nu folosește processed_files sau alte restricții artificiale care pot sări fișiere
+Code clarity: Funcții dedicate pentru fiecare operație (extract_canonical, extract_flags, replace_flag_link) fac codul mai ușor de urmărit și debug

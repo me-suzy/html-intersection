@@ -1,0 +1,30 @@
+- Nu există pe PyPI (de aceea `pip install html-intersection` eșuează). Instalează-l local din surse sau din wheel.
+
+Opțiunea 1 — Instalează direct din folderul sursă (rapid):
+```powershell
+pip install "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection"
+```
+(editable, dacă vrei să reflecte instant schimbările din cod)
+```powershell
+pip install -e "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection"
+```
+
+Opțiunea 2 — Build wheel și instalează (recomandat pentru alte medii):
+```powershell
+cd "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection"
+py -m pip install --upgrade pip build
+py -m build
+pip install --force-reinstall .\dist\html_intersection-0.2.0-*.whl
+```
+
+Opțiunea 3 — Publicare pe TestPyPI și instalare (opțional):
+- Construiești ca mai sus, apoi:
+```powershell
+py -m pip install --upgrade twine
+$env:TWINE_USERNAME="__token__"
+$env:TWINE_PASSWORD="pypi-<YOUR_TESTPYPI_TOKEN>"
+py -m twine upload --repository testpypi dist\*
+pip install --index-url https://test.pypi.org/simple/ --no-deps html-intersection
+```
+
+Notă: pe Windows e mai sigur să folosești ghilimele la căi cu spații. Dacă ai mai multe versiuni de Python, folosește `py -m pip ...` în loc de `pip ...`.

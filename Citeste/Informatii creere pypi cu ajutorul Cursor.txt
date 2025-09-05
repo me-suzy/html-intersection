@@ -1,0 +1,138 @@
+I'll scan the existing scripts and notes to understand the current "Intersection" logic before scaffolding the new `html-intersection` package. Then I'll create the package files, README, and setup, plus examples and publishing instructions.
+
+[10 tools called]
+
+I'll create a full Python package `html-intersection` with core logic, CLI, README, license, examples, and tests. Then I’ll provide step-by-step install and PyPI publish instructions, plus 3 Python usage examples.
+
+[1 tool called]
+
+I'm scaffolding the `html-intersection` Python package with pyproject, README, license, and basic src layout. Next, I'll implement the core library and CLI.
+
+[13 tools called]
+
+I'll add minimal tests and a third Python example, then check for any linter issues.
+
+[4 tools called]
+
+- Built the `html-intersection` package scaffold and implemented core logic + CLI. Now I’ll give you install/build/publish steps and three usage examples.
+
+### Ce am creat în workspace
+- `html-intersection/pyproject.toml` (config pachet)
+- `html-intersection/README.md` (instrucțiuni, similar stilului `html` de pe PyPI)
+- `html-intersection/LICENSE`, `.gitignore`
+- `html-intersection/src/html_intersection/`:
+  - `__init__.py`
+  - `utils.py` (citire/ scriere fișiere cu encoding fallback)
+  - `core.py` (toată logica: canonicals, flags, cross-ref)
+  - `cli.py` (CLI cu subcomenzi)
+- `html-intersection/examples/`:
+  - `01_basic_repair.py`
+  - `02_dry_run.py`
+  - `03_step_by_step.py`
+  - `03_cli_examples.ps1`
+- `html-intersection/tests/test_stub.py`
+
+### Cum instalezi local pe laptop (Windows PowerShell)
+1) Creează și activează un venv:
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -m pip install --upgrade pip
+```
+
+2) Instalează pachetul local (editable):
+```powershell
+cd "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection"
+pip install -e .
+```
+
+3) Rulează CLI-ul:
+```powershell
+html-intersection repair --ro-dir "E:\...\ro" --en-dir "E:\...\en" --base-url https://neculaifantanaru.com --backup-ext .bak
+```
+
+- Subcomenzi disponibile:
+  - `fix-canonicals`, `fix-flags`, `sync`, `scan`, `repair`
+- Parametri comuni:
+  - `--ro-dir`, `--en-dir`, `--base-url`, `--dry-run`, `--backup-ext`
+
+### Cum construiești și publici pe PyPI
+- Creează cont pe `pypi.org`, generează un token.
+- Opțional, publică întâi pe TestPyPI.
+
+Pași:
+```powershell
+# Din folderul pachetului
+py -m pip install --upgrade build twine
+
+# Build
+py -m build
+
+# Upload la TestPyPI (recomandat inițial)
+$env:TWINE_USERNAME="__token__"
+$env:TWINE_PASSWORD="pypi-<TOKEN_TESTPYPI>"
+py -m twine upload --repository testpypi dist/*
+
+# După verificări, upload la PyPI
+$env:TWINE_USERNAME="__token__"
+$env:TWINE_PASSWORD="pypi-<TOKEN_PYPI>"
+py -m twine upload dist/*
+```
+
+Apoi poți instala din PyPI:
+```powershell
+pip install html-intersection
+```
+
+### 3 exemple Python care folosesc noua librărie
+1) Reparare completă
+```python
+from html_intersection.core import repair_all
+
+repair_all(
+    ro_directory=r"E:\site\ro",
+    en_directory=r"E:\site\en",
+    base_url="https://neculaifantanaru.com",
+)
+```
+
+2) Doar canonicals + flags (pas cu pas)
+```python
+from html_intersection.core import fix_canonicals, fix_flags_match_canonical
+
+ro = r"E:\site\ro"
+en = r"E:\site\en"
+base = "https://neculaifantanaru.com"
+
+fix_canonicals(ro, en, base)
+fix_flags_match_canonical(ro, en, base)
+```
+
+3) Doar sincronizare cross-referințe (RO↔EN)
+```python
+from html_intersection.core import sync_cross_references
+
+sync_cross_references(
+    ro_directory=r"E:\site\ro",
+    en_directory=r"E:\site\en",
+    base_url="https://neculaifantanaru.com",
+)
+```
+
+### CLI rapid (similar cu exemplele din `examples/03_cli_examples.ps1`)
+```powershell
+html-intersection fix-canonicals --ro-dir "E:\site\ro" --en-dir "E:\site\en" --base-url https://neculaifantanaru.com
+html-intersection fix-flags      --ro-dir "E:\site\ro" --en-dir "E:\site\en" --base-url https://neculaifantanaru.com
+html-intersection sync           --ro-dir "E:\site\ro" --en-dir "E:\site\en" --base-url https://neculaifantanaru.com
+```
+
+### Note despre logică
+- Respectă ordinea în 3 pași: canonicals → flags (în același fișier) → cross-referințe RO↔EN, cu match case strict.
+- `backup_ext=".bak"` păstrează o copie înainte de scriere.
+- Encodings fallback pentru citire: utf-8, latin1, cp1252, iso-8859-1.
+
+### Referințe citate
+- Proiectul de referință pentru structură: [https://github.com/me-suzy/Diacritice-Proiect---pypi-org](https://github.com/me-suzy/Diacritice-Proiect---pypi-org)
+- Stilul paginii PyPI folosit ca inspirație: [https://pypi.org/project/html/](https://pypi.org/project/html/)
+
+- All tasks for scaffolding, core, CLI, README, and examples/tests are done. Next, if vrei, pot seta și un `CHANGELOG.md`, plus GitHub workflow pentru build/publish.

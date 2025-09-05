@@ -1,0 +1,395 @@
+
+
+Pasul 1. Prima oara verifici folderele en si ro, si te asiguri ca in fiecare html tagul canonical este fix aceeasi denumire ca in denumirea fisierului din care face parte. Exemplu: daca fisierul se numeste "e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\i-m-alive.html"   inseamna ca canonical trebuie sa fie identic 
+Pasul 2. Verifici si te asiguri ca link canonical din fisierul ro , exemplu: <link rel="canonical" href="https://neculaifantanaru.com/i-m-alive.html" />  corespunde cu link-ul din sectiunea flags pentru Romania, exemplu <li><a cunt_code="+40" href="https://neculaifantanaru.com/i-m-alive.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>  
+
+Apo la fel in en Verifici si te asiguri ca link canonical din fisierul en exemplu  <link rel="canonical" href="https://neculaifantanaru.com/en/I-m-alive.html" />  corespunde cu link-ul din sectiunea flags, exemplu <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/I-m-alive.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+Aici atentie, trebuie toate operatiunile match case, fiindca de exemplu I-m-alive.html este diferit i-m-alive.html , adica litera I mare este diferita de litera i mic, de aceea trebuie match case la orice find and replace.
+
+
+Pasul 3. Verifici neconcordantele din sectiunea flags, daca corespund link-urile din en si ro. Exemplu: <li><a cunt_code="+40" href="https://neculaifantanaru.com/i-m-alive.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li> din sectiunea flags, din fisierul ro "e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\i-m-alive.html"  trebuie sa fie identic cu <li><a cunt_code="+40" href="https://neculaifantanaru.com/i-m-alive.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li> din sectiunea flags, din fisierul en  "e:\Carte\BB\17 - Site Leadership\Principal 2022\en\I-m-alive.html" 
+
+SI la fel, link-ul <li><a cunt_code="\+1" href="https://neculaifantanaru.com/en/I-m-alive.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li> din fisierul en, din sectiunea flags, adica "e:\Carte\BB\17 - Site Leadership\Principal 2022\en\I-m-alive.html" trebuie sa fie identic cu  href="https://neculaifantanaru.com/en/I-m-alive.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li> din fisierul ro, din sectiunea flags, "e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\i-m-alive.html" 
+
+Peste tot trebuie sa fie match case, cautare exacta, daca e scris cu o litera mare, nu lasam acea litera mica.
+
+---------- Exemple de probleme cu care m-am confruntat pe parcursul gasirii unei solutii Python------
+
+gresit. am asa dupa rularea codului
+
+"e:\Carte\BB\17 - Site Leadership\Principal 2022\en\the-eyes-see-the-world-the-heart-feels-it-deep-down.html" 
+
+<link rel="canonical" href="https://neculaifantanaru.com/en/the-eyes-see-the-world-the-heart-feels-it-deep-down.html" />
+
+                <!-- FLAGS_1 -->
+                <div class="wrapper country-wrapper">
+                    <dl id="country-select" class="dropdown country-select">
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>United States</span></span><i class="fa fa-chevron-down"></i></a></dt>
+                        <dd>
+                            <ul style="display: none;">
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/visio-aurea.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/qualites-d-un-leader.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/the-eyes-see-the-world-the-heart-feels-it-deep-down.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/calidades-de-un-lider.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/qualidades-de-um-lider.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/qualities-of-a-leader.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/qualities-of-a-leader.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/qualities-of-a-leader.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/qualities-of-a-leader.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/qualities-of-a-leader.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <!-- FLAGS -->
+
+iar in ro
+
+"e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\ochii-vad-lumea-inima-o-simte-pana-in-adanc.html" 
+
+<link rel="canonical" href="https://neculaifantanaru.com/ochii-vad-lumea-inima-o-simte-pana-in-adanc.html" />
+
+                <!-- FLAGS_1 -->
+                <div class="wrapper country-wrapper">
+                    <dl id="country-select" class="dropdown country-select">
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>Romania</span></span><i class="fa fa-chevron-down"></i></a></dt>
+                        <dd>
+                            <ul style="display: none;">
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/ochii-vad-lumea-inima-o-simte-pana-in-adanc.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/le-chercheur-des-etoiles.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/the-eyes-see-the-world-the-heart-feels-it-deep-down.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/el-buscador-de-estrellas.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/o-buscador-da-estrela.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/the-work-of-a-gemini-sign-artist.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/the-work-of-a-gemini-sign-artist.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/the-work-of-a-gemini-sign-artist.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/the-work-of-a-gemini-sign-artist.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/the-work-of-a-gemini-sign-artist.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <!-- FLAGS -->
+
+Acuma spune-mi si mie, de ce nu coincid segmentele din flags, partea de ro si de en ?
+
+De ce apare <li><a cunt_code="+40" href="https://neculaifantanaru.com/visio-aurea.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li> cand trebuia sa fie <li><a cunt_code="+40" href="https://neculaifantanaru.com/ochii-vad-lumea-inima-o-simte-pana-in-adanc.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+Pentru ca nu ai respectat regulile. Repet pentru a 11-a oare regulile
+
+Ti-am spus. 
+Pasul 1. Prima oara verifici folderele en si ro, si te asiguri ca in fiecare html tagul canonical este fix aceeasi denumire ca in denumirea fisierului din care face parte.
+Pasul 2. Verifici si te asiguri ca link canonical din fisierul ro corespunde cu link-ul din sectiunea flags, exemplu <li><a cunt_code="+40" href="https://neculaifantanaru.com/ochii-surprind-momente-care-devin-puncte-de-cotitura-in-reflectia-personala.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li> si la fel in en Verifici si te asiguri ca link canonical din fisierul fisierul en corespunde cu link-ul din sectiunea flags, exemplu <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/the-memory-of-a-dusty-thought.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+Pasul 3. Verifici neconcordantele din sectiunea flags, daca corespund link-urile din en si ro.
+Peste tot trebuie sa fie match case, cautare exacta, daca e scris cu o litera mare, nu lasam acea litera mica.
+
+Respecta pasii, altfel gresesti.
+
+de exemplu, stii de ce nu schimba <li><a cunt_code="+40" href="https://neculaifantanaru.com/visio-aurea.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li> din "e:\Carte\BB\17 - Site Leadership\Principal 2022\en\the-eyes-of-the-spirit-open-to-a-larger-reality.html" 
+
+pentru ca in "e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\visio-aurea.html"   in sectiunea flags se afla la en <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/the-eyes-see-the-world-the-heart-feels-it-deep-down.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+Deci, codul verifica deodata toate si face confuzie.
+
+Ai absolut dreptate! Codul face confuzie pentru că încearcă să proceseze totul simultan în loc să urmeze pașii strict secvențiali.
+
+Înțeleg perfect problema! Codul face procesări simultane care se suprascriu reciproc. Din exemplul tău:
+
+visio-aurea.html (RO) → the-eyes-see-the-world-the-heart-feels-it-deep-down.html (EN)
+the-eyes-of-the-spirit-open-to-a-larger-reality.html (EN) → visio-aurea.html (RO)
+
+
+acuma a corectat bine unele, dar iar a gresit altele.  De exempu, dupa rularea codului avem
+
+"e:\Carte\BB\17 - Site Leadership\Principal 2022\en\the-wasted-time-principle.html" 
+
+<link rel="canonical" href="https://neculaifantanaru.com/en/the-wasted-time-principle.html" />
+
+                <!-- FLAGS_1 -->
+
+                <div class="wrapper country-wrapper">
+
+                    <dl id="country-select" class="dropdown country-select">
+
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>United States</span></span><i class="fa fa-chevron-down"></i></a></dt>
+
+                        <dd>
+
+                            <ul style="display: none;">
+
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/principiul-fons-serenitatis.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/le-principe-du-temps-perdu.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/the-wasted-time-principle.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/el-principio-del-tiempo-perdido.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/o-principio-desperdicado-do-tempo.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/the-wasted-time-principle.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/the-wasted-time-principle.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/the-wasted-time-principle.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/the-wasted-time-principle.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/the-wasted-time-principle.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+
+                            </ul>
+
+                        </dd>
+
+                    </dl>
+
+                </div>
+
+                <!-- FLAGS -->
+
+iar "e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\principiul-timpului-pierdut.html" 
+
+	<link rel="canonical" href="https://neculaifantanaru.com/principiul-timpului-pierdut.html" />
+
+                <!-- FLAGS_1 -->
+
+                <div class="wrapper country-wrapper">
+
+                    <dl id="country-select" class="dropdown country-select">
+
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>Romania</span></span><i class="fa fa-chevron-down"></i></a></dt>
+
+                        <dd>
+
+                            <ul style="display: none;">
+
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/principiul-timpului-pierdut.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/le-principe-du-temps-perdu.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/the-wasted-time-principle.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/el-principio-del-tiempo-perdido.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/o-principio-desperdicado-do-tempo.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/the-wasted-time-principle.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/the-wasted-time-principle.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/the-wasted-time-principle.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/the-wasted-time-principle.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/the-wasted-time-principle.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+
+                            </ul>
+
+                        </dd>
+
+                    </dl>
+
+                </div>
+
+                <!-- FLAGS -->
+
+Acuma spune-mi si mie, de ce a pus acolo                                 <li><a cunt_code="+40" href="https://neculaifantanaru.com/principiul-fons-serenitatis.html"><span style="background-position:0px -671px"></span>  cand de fapt trebuia sa puna  <li><a cunt_code="+40" href="https://neculaifantanaru.com/principiul-timpului-pierdut.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+
+iar, unele se inlocuiesc bine, altele nu. De exemplu
+
+"e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\sustineti-eforturile-oamenilor.html" 
+
+	<link rel="canonical" href="https://neculaifantanaru.com/sustineti-eforturile-oamenilor.html" />
+
+                <!-- FLAGS_1 -->
+
+                <div class="wrapper country-wrapper">
+
+                    <dl id="country-select" class="dropdown country-select">
+
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>Romania</span></span><i class="fa fa-chevron-down"></i></a></dt>
+
+                        <dd>
+
+                            <ul style="display: none;">
+
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/sustineti-eforturile-oamenilor.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/developpement-personnel-soutenir-l-effort-des-gens.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/what-bizarre-whim-haunts-the-soul-of-this-dying-man.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/desarrollo-personal-sostenga-el-esfuerzo-de-personas.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/desenvolvimento-pessoal-sustentar-o-esforco-das-pessoas.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/sustain-peoples-effort.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/sustain-peoples-effort.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/sustain-peoples-effort.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/sustain-peoples-effort.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/sustain-peoples-effort.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+
+                            </ul>
+
+                        </dd>
+
+                    </dl>
+
+                </div>
+
+                <!-- FLAGS -->
+
+si in en am asa  "e:\Carte\BB\17 - Site Leadership\Principal 2022\en\sustain-peoples-effort.html" 
+
+	<link rel="canonical" href="https://neculaifantanaru.com/en/sustain-peoples-effort.html" />
+
+                <!-- FLAGS_1 -->
+
+                <div class="wrapper country-wrapper">
+
+                    <dl id="country-select" class="dropdown country-select">
+
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>United States</span></span><i class="fa fa-chevron-down"></i></a></dt>
+
+                        <dd>
+
+                            <ul style="display: none;">
+
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/sustineti-eforturile-oamenilor.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/developpement-personnel-soutenir-l-effort-des-gens.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/sustain-peoples-effort.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/desarrollo-personal-sostenga-el-esfuerzo-de-personas.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/desenvolvimento-pessoal-sustentar-o-esforco-das-pessoas.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/sustain-peoples-effort.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/sustain-peoples-effort.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/sustain-peoples-effort.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/sustain-peoples-effort.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/sustain-peoples-effort.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+
+                            </ul>
+
+                        </dd>
+
+                    </dl>
+
+                </div>
+
+                <!-- FLAGS -->
+
+de unde naiba a aparut in flags  <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/what-bizarre-whim-haunts-the-soul-of-this-dying-man.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>  si de ce nu a pus <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/sustain-peoples-effort.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+
+*** Remote Interpreter Reinitialized ***
+REPARARE COMPLETĂ ÎN 3 PAȘI
+================================================================================
+PASUL 1: CANONICAL = NUMELE FIȘIERULUI
+============================================================
+✅ Canonical-uri reparate: RO=0, EN=0, TOTAL=0
+
+PASUL 2: FLAGS = CANONICAL (în același fișier)
+============================================================
+✅ FLAGS reparate: RO=0, EN=0, TOTAL=0
+
+PASUL 3: SINCRONIZARE CROSS-REFERENCES RO ↔ EN
+============================================================
+Găsite 1903 perechi RO→EN și 1892 perechi EN→RO
+Corectat EN additions-V.html: RO link → adaosuri-V.html
+Corectat EN the-witchcraft-of-a-masterpieces-creator.html: RO link → alchimistul-si-pasarea-sufletului.html
+Corectat EN the-struggle-of-tenacious-souls.html: RO link → cum-arata-imagini-robineti-centrala-termica-ariston.html
+Corectat EN the-struggle-of-tenacious-souls.html: RO link → imagini-cu-flori-din-gradina-botanica-iasi.html
+Corectat EN the-struggle-of-tenacious-souls.html: RO link → imagini-din-muzeul-mitropolitan-iasi.html
+Corectat EN the-struggle-of-tenacious-souls.html: RO link → imagini-diverse.html
+Corectat EN danton-game-of-cards.html: RO link → in-ce-rezida-daracterul-autobiografic-al-filmului.html
+Corectat EN the-eye-follows-the-purity-reflected-in-the-representations-of-nature.html: RO link → incanta-mi-privirea-ochilor-cu-ceva-care-reflecta-armonia-naturii.html
+Corectat EN the-law-of-healing.html: RO link → legea-sigiliului-sacru.html
+Corectat EN the-memory-of-a-dusty-thought.html: RO link → memoria-unei-gandiri-prafuite.html
+Corectat EN the-eyes-of-the-spirit-open-to-a-larger-reality.html: RO link → ochii-spiritului-se-deschid-catre-o-realitate-mai-vasta.html
+Corectat EN the-eyes-see-the-world-the-heart-feels-it-deep-down.html: RO link → ochii-vad-lumea-inima-o-simte-pana-in-adanc.html
+Corectat EN the-projection-of-the-human-soul-floods-the-geography-of-the-whole-vision.html: RO link → ochiul-etern-vegheaza-din-inima-desertului.html
+Corectat EN painting-is-the-mirror-of-the-creative-soul.html: RO link → pictura-este-oglinda-sufletului-creator.html
+Corectat EN the-wasted-time-principle.html: RO link → principiul-fons-serenitatis.html
+✅ Cross-references reparate: 15
+
+================================================================================
+REZULTATE FINALE
+================================================================================
+Pasul 1 - Canonical-uri reparate: 0
+Pasul 2 - FLAGS → canonical: 0
+Pasul 3 - Cross-references: 15
+🎉 TOTAL: 15
+>>> 
+
+gresit. scaneaza prea rapid, si multe fisiere nu le ia in considerare si nu le modifica deloc. de exemplu  "e:\Carte\BB\17 - Site Leadership\Principal 2022\ro\i-m-alive.html" 
+
+	<link rel="canonical" href="https://neculaifantanaru.com/i-m-alive.html" />
+
+                <!-- FLAGS_1 -->
+                <div class="wrapper country-wrapper">
+                    <dl id="country-select" class="dropdown country-select">
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>Romania</span></span><i class="fa fa-chevron-down"></i></a></dt>
+                        <dd>
+                            <ul style="display: none;">
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/i-m-alive.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/le-chercheur-des-etoiles.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/445645.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/el-buscador-de-estrellas.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/o-buscador-da-estrela.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/i-m-alive.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/i-m-alive.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/i-m-alive.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/i-m-alive.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/i-m-alive.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <!-- FLAGS -->
+
+in en "e:\Carte\BB\17 - Site Leadership\Principal 2022\en\I-m-alive.html"  am asa  	<link rel="canonical" href="https://neculaifantanaru.com/en/I-m-alive.html" />
+
+                <!-- FLAGS_1 -->
+                <div class="wrapper country-wrapper">
+                    <dl id="country-select" class="dropdown country-select">
+                        <dt><a href="javascript:void(0);"><span><span style="background-position:0px -671px"></span><span>United States</span></span><i class="fa fa-chevron-down"></i></a></dt>
+                        <dd>
+                            <ul style="display: none;">
+                                <li><a cunt_code="+40" href="https://neculaifantanaru.com/i-m-alive.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+                                <li><a cunt_code="+594" href="https://neculaifantanaru.com/fr/la-porte-du-grand-puzzle.html"><span style="background-position:0px -2234px"></span><span>French</span></a></li>
+                                <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/I-m-alive.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+                                <li><a cunt_code="+34" href="https://neculaifantanaru.com/es/la-puerta-del-gran-rompecabezas.html"><span style="background-position:0px -1155px"></span><span>Spain</span></a></li>
+                                <li><a cunt_code="+351" href="https://neculaifantanaru.com/pt/a-porta-do-grande-enigma.html"><span style="background-position:0px -517px"></span><span>Portugal</span></a></li>
+                                <li><a cunt_code="+966" href="https://neculaifantanaru.com/ar/I-m-alive.html"><span style="background-position:0px -33px"></span><span>Saudi Arabia</span></a></li>
+                                <li><a cunt_code="+86" href="https://neculaifantanaru.com/zh/I-m-alive.html"><span style="background-position:0px -825px"></span><span>China</span></a></li>
+                                <li><a cunt_code="+91" href="https://neculaifantanaru.com/hi/I-m-alive.html"><span style="background-position:0px -1694px"></span><span>India</span></a></li>
+                                <li><a cunt_code="+49" href="https://neculaifantanaru.com/de/I-m-alive.html"><span style="background-position:0px -2509px"></span><span>Germany</span></a></li>
+                                <li><a cunt_code="+7" href="https://neculaifantanaru.com/ru/I-m-alive.html"><span style="background-position:0px -660px"></span><span>Russia</span></a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <!-- FLAGS -->
+
+acuma spune-mi si mie de ce nu a schimbat aici   <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/445645.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+Apoi, in en canoninical link trebuie sa fie cel de aici  <li><a cunt_code="+1" href="https://neculaifantanaru.com/en/445645.html"><span style="background-position:0px -44px"></span><span>United States</span></a></li>
+
+in ro, canonical link trebuie sa fie acelasi cu cel de aici  <li><a cunt_code="+40" href="https://neculaifantanaru.com/ochii-vad-lumea-inima-o-simte-pana-in-adanc.html"><span style="background-position:0px -671px"></span><span>Romania</span></a></li>
+
+
+
+Fiindca nu a respectat pasii

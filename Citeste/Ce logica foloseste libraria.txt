@@ -1,0 +1,123 @@
+Funcțiile returnează toate 0, ceea ce înseamnă că libraria nu detectează această problemă ca fiind una care trebuie reparată. Să investigăm de ce:
+
+## Să analizăm codul sursă al librăriei
+
+```python
+# Să vedem ce conține modulul core
+from html_intersection import core
+import inspect
+
+print("=== Analiză Cod Sursă ===")
+
+# Verifică codul sursă al sync_cross_references
+print("1. sync_cross_references source:")
+try:
+    source = inspect.getsource(core.sync_cross_references)
+    print(source)
+except Exception as e:
+    print(f"Nu se poate obține sursa: {e}")
+
+print("\n" + "="*50 + "\n")
+
+# Verifică codul sursă al repair_all  
+print("2. repair_all source:")
+try:
+    source = inspect.getsource(core.repair_all)
+    print(source)
+except Exception as e:
+    print(f"Nu se poate obține sursa: {e}")
+```
+
+## Sau să verificăm fișierul core.py direct
+
+```python
+import html_intersection
+import os
+
+# Calea către fișierul core.py
+core_file = os.path.join(os.path.dirname(html_intersection.__file__), 'core.py')
+
+print("=== Conținut core.py ===")
+if os.path.exists(core_file):
+    with open(core_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+        print(content)
+else:
+    print("Fișierul core.py nu a fost găsit")
+```
+
+## Testare manuală a detecției problemei
+
+```python
+def manual_problem_detection():
+    """Verifică manual dacă libraria ar trebui să detecteze problema"""
+    
+    base_dir = r"C:\Users\necul\AppData\Local\Temp\tmpj1yqjnet"
+    ro_dir = os.path.join(base_dir, "ro")
+    en_dir = os.path.join(base_dir, "en")
+    
+    print("=== Detecție Manuală Probleme ===")
+    
+    # Listează toate fișierele HTML
+    from html_intersection.utils import list_html_files
+    
+    ro_files = list_html_files(ro_dir)
+    en_files = list_html_files(en_dir)
+    
+    print(f"RO files: {ro_files}")
+    print(f"EN files: {en_files}")
+    
+    # Verifică dacă există corespondența așteptată
+    for ro_file in ro_files:
+        ro_name = os.path.basename(ro_file)
+        print(f"\nAnalizare {ro_name}:")
+        
+        # Ce fișier EN ar trebui să corespundă?
+        expected_en = ro_name.replace('.html', '-en.html')
+        expected_en_path = os.path.join(en_dir, expected_en)
+        
+        print(f"  Fișier EN așteptat: {expected_en}")
+        print(f"  Există: {os.path.exists(expected_en_path)}")
+        
+        if os.path.exists(expected_en_path):
+            # Verifică cross-references
+            from html_intersection.utils import read_file_with_fallback_encoding
+            
+            ro_content = read_file_with_fallback_encoding(ro_file)
+            en_content = read_file_with_fallback_encoding(expected_en_path)
+            
+            # Extrage linkurile din FLAGS
+            import re
+            
+            ro_flags = re.search(r'<!-- FLAGS_1 -->(.*?)<!-- FLAGS -->', ro_content, re.DOTALL)
+            en_flags = re.search(r'<!-- FLAGS_1 -->(.*?)<!-- FLAGS -->', en_content, re.DOTALL)
+            
+            if ro_flags and en_flags:
+                ro_ro_link = re.search(r'href="https://neculaifantanaru\.com/([^"]+)">RO', ro_flags.group(1))
+                ro_en_link = re.search(r'href="https://neculaifantanaru\.com/en/([^"]+)">EN', ro_flags.group(1))
+                
+                en_ro_link = re.search(r'href="https://neculaifantanaru\.com/([^"]+)">RO', en_flags.group(1))
+                en_en_link = re.search(r'href="https://neculaifantanaru\.com/en/([^"]+)">EN', en_flags.group(1))
+                
+                print(f"  RO file - RO link: {ro_ro_link.group(1) if ro_ro_link else 'None'}")
+                print(f"  RO file - EN link: {ro_en_link.group(1) if ro_en_link else 'None'}")
+                print(f"  EN file - RO link: {en_ro_link.group(1) if en_ro_link else 'None'}")
+                print(f"  EN file - EN link: {en_en_link.group(1) if en_en_link else 'None'}")
+                
+                # Verifică inconsistențele
+                if ro_ro_link and en_ro_link:
+                    if ro_ro_link.group(1) != en_ro_link.group(1):
+                        print(f"  ⚠️ PROBLEMĂ: Cross-reference RO inconsistent!")
+                        print(f"     RO spune: {ro_ro_link.group(1)}")
+                        print(f"     EN spune: {en_ro_link.group(1)}")
+
+if __name__ == "__main__":
+    manual_problem_detection()
+```
+
+Rulează acestea pentru a vedea:
+1. **Ce logică folosește libraria** pentru detectarea problemelor
+2. **De ce nu consideră discrepanța ca o problemă**
+3. **Ce pattern se așteaptă** pentru detecția cross-references
+
+Suspectez că libraria ta e designed pentru un pattern specific și nu detectează acest tip de inconsistență, sau că implementarea are o logică diferită de cea așteptată.

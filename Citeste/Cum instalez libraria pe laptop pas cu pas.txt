@@ -1,0 +1,163 @@
+bun, acuma spune-mi cum fac sa instalez libraria pe laptop, pas cu pas
+
+
+### Instalare pe Windows (PowerShell), pas cu pas
+
+Deschizi Powershell in folder: Win+E (deschizi windows explorer) - Shift + ClickDreapta + Open Powershell - Apoi scrie comanda asta:  cd "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection\.venv"
+
+
+- Verifică Python
+
+py --version
+```
+
+- Mergi în folderul pachetului
+
+cd "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection"
+```
+
+- Creează și activează un mediu virtual
+
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+Dacă activarea dă eroare de policy:
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+- Actualizează pip
+
+py -m pip install --upgrade pip
+```
+
+- Instalează librăria din surse (editable)
+
+py -m pip install -e .
+```
+
+- Verifică instalarea
+
+html-intersection --help
+```
+
+### Test rapid (fără a scrie fișiere)
+- Scanare cu raport pe folderele de test
+```powershell
+html-intersection scan --ro-dir "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\test\ro" --en-dir "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\test\en" --base-url https://neculaifantanaru.com --report
+```
+- „Repair” în modul uscat (nu scrie în fișiere)
+```powershell
+html-intersection repair --ro-dir "E:\...\test\ro" --en-dir "E:\...\test\en" --base-url https://neculaifantanaru.com --dry-run
+```
+
+### (Opțional) Build wheel + instalare locală
+```powershell
+py -m pip install build
+py -m build
+py -m pip install --force-reinstall .\dist\html_intersection-0.2.0-py3-none-any.whl
+```
+
+- Dezactivare mediu virtual când ai terminat
+```powershell
+deactivate
+```
+
+- Dezinstalare (dacă e nevoie)
+```powershell
+py -m pip uninstall -y html-intersection
+```
+
+- **Important**: dacă `py` nu merge, înlocuiește cu `python` în comenzi.
+
+- Am inclus pașii pentru instalare locală în venv, verificare CLI, testare cu `scan --report` și opțiunea de build wheel.
+
+
+-------------
+În venv e instalat, dar Windows nu găsește shortcut-ul CLI. Încearcă pe rând:
+
+- Verifică instalarea în venv
+```powershell
+python -m pip show html-intersection
+```
+
+- Rulează CLI prin modulul Python (funcționează chiar dacă nu există exe-ul)
+```powershell
+python -m html_intersection.cli --help
+```
+
+- Sau rulează executabilul direct din venv
+```powershell
+.\.venv\Scripts\html-intersection.exe --help
+```
+
+Dacă tot nu merge, actualizează uneltele și reinstalează în editable:
+```powershell
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -e .
+```
+
+Apoi verifică din nou:
+```powershell
+python -m html_intersection.cli --help
+```
+
+Da, ești în altă locație și nu era activ venv-ul. Fă exact așa:
+
+1) Deschide PowerShell în folderul proiectului (cu ghilimele din cauza spațiilor)
+```powershell
+Set-Location -LiteralPath "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection"
+```
+Alternativ: în File Explorer mergi în acest folder, click pe bara de adresă, scrie powershell și Enter.
+
+2) Activează venv (sau creează-l dacă lipsește)
+```powershell
+.\.venv\Scripts\Activate.ps1
+# dacă nu există:
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+Asigură-te că vezi (.venv) la începutul promptului.
+
+3) Instalează local (folosește python, nu py, ca să fie din venv)
+```powershell
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -e .
+```
+
+4) Verifică
+```powershell
+python -m pip show html-intersection
+python -m html_intersection.cli --help
+# sau
+.\.venv\Scripts\html-intersection.exe --help
+```
+
+Dacă `cd` îți dă din nou eroare, ai grijă să pui toată calea între ghilimele.
+
+Poți intra în acel folder în PowerShell așa:
+
+```powershell
+cd "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection\.venv"
+```
+
+Dacă preferi varianta robustă (cu verificare):
+
+```powershell
+$path = "E:\Carte\BB\17 - Site Leadership\alte\Ionel Balauta\Aryeht\Task 1 - Traduce tot site-ul\Doar Google Web\Andreea\Meditatii\2023\Intersection\html-intersection\.venv"
+if (Test-Path -LiteralPath $path) {
+    Set-Location -LiteralPath $path
+    Get-ChildItem
+} else {
+    Write-Host "Nu găsesc calea:" $path -ForegroundColor Red
+}
+```
+
+Vrei și activarea virtual env din acel folder? De acolo rulezi:
+
+```powershell
+.\Scripts\Activate.ps1
+```
+
+(dacă PowerShell blochează scriptul: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`)
